@@ -8,13 +8,14 @@
 
 import Foundation
 
-class libros {
+class libros  {
     
     var libross : Array<Array<String>> = Array<Array<String>>()
     
-    init(t:String,i:String)
-    {
-        self.libross.append([t,i])
-        
-    }
+     init(t:String,i:String)
+        {
+            libross.append([t,i])
+            
+        }
+
 }

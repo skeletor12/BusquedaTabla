@@ -11,22 +11,22 @@ import UIKit
 class ViewBuscar: UIViewController {
     
     
-//var libros : Array<Array<String>> = Array<Array<String>>()
+var libros : Array<Array<String>> = Array<Array<String>>()
     
     @IBOutlet weak var ISBN: UITextField!
     @IBOutlet weak var titulo: UILabel!
     @IBOutlet weak var autor: UILabel!
     @IBOutlet weak var portada: UIImageView!
     
-    func imprime()->String{
-        let IsbnNumber=String(self.ISBN.text!)
-        
-        return IsbnNumber
-    }
     
-    func busqueda() {
-        let IsbnNumberR = imprime()
-        let urls="https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:" + IsbnNumberR
+    @IBAction func ISBN(sender: AnyObject) {
+    
+    //func imprime()->String{
+        let IsbnNumber=String(self.ISBN.text!)
+    
+    //func busqueda() {
+        
+        let urls="https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:" + IsbnNumber
         let url = NSURL(string: urls)
         let datos: NSData? = NSData(contentsOfURL: url!)
         
@@ -52,14 +52,13 @@ class ViewBuscar: UIViewController {
                     
                     let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: NSJSONReadingOptions.MutableLeaves)
                     let dico1 = json as! NSDictionary
-                    let dico2 = dico1["ISBN:"+IsbnNumberR] as! NSDictionary
+                    let dico2 = dico1["ISBN:"+IsbnNumber] as! NSDictionary
                     
                     self.titulo.text = dico2["title"] as! NSString as String
                     let tema = dico2["title"] as! String
                     
                     
-                   //self.libros.append([tema,IsbnNumberR])
-                    let envio  = libros.init(t: tema, i: IsbnNumberR)
+                  // self.libros.append([tema,IsbnNumberR])
              
                     
                     let autores =  dico2["authors"] as! NSArray
@@ -92,7 +91,7 @@ class ViewBuscar: UIViewController {
                 
             }}
     
-        print(libros)
+  
     
     }
     
@@ -110,11 +109,9 @@ class ViewBuscar: UIViewController {
             return autores
         }
     }
+    
 
-    @IBAction func ISBN(sender: AnyObject) {
-        busqueda()
-        imprime()
-    }
+
     
     @IBAction func limpiar(sender: AnyObject) {
         self.autor.text = ""
@@ -127,7 +124,9 @@ class ViewBuscar: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         // Do any additional setup after loading the view.
     }
 
@@ -137,14 +136,17 @@ class ViewBuscar: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let returnIsbn = segue.destinationViewController as! TableViewController
+            returnIsbn.isbn = String(self.ISBN.text!)
+            returnIsbn.tema = String(self.titulo.text!)
+        print (returnIsbn.isbn)
+
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ 
 
 }

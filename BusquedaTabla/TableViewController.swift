@@ -8,21 +8,35 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController{
     
     
     var libros : Array<Array<String>> = Array<Array<String>>()
+    var tema = ""
+    var isbn = ""
+    var ISBN : String = ""
+    var titulo : String = "titulo"
     
     
+    
+    override func viewWillAppear(animated: Bool) {
+        ISBN = String(isbn)
+        print(ISBN)
+        titulo = String(tema)
+        libros.append([titulo,ISBN])
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.reloadData()
         self.title = "LIBROS BUSCADOS"
+        print (libros)
         
-        self.libros.append(["cien años","84"])
-        self.libros.append(["dos","978"])
-        
+        self.libros.append(["Cien años de soledad","978-84-376-0494-7"])
+        self.libros.append(["Óliver y Patch","978"])
+        self.libros.append(["Federico García Lorca y el teatro clásico","978-84-95301-51-2"])
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -113,6 +127,8 @@ class TableViewController: UITableViewController {
         
         
     }
+    
+    
     
     
 
