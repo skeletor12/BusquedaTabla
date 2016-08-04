@@ -7,15 +7,18 @@
 //
 
 import Foundation
+import UIKit
 
-class libros  {
+class libros{
     
-    var libross : Array<Array<String>> = Array<Array<String>>()
+    var isnb : String
+    var titulo : String
+  
     
-     init(t:String,i:String)
-        {
-            libross.append([t,i])
-            
-        }
-
+    init(){
+        self.isnb = ""
+        self.titulo = ""
+        
+    }
+    
 }

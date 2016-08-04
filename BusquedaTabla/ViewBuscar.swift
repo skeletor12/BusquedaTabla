@@ -11,7 +11,7 @@ import UIKit
 class ViewBuscar: UIViewController {
     
     
-var libros : Array<Array<String>> = Array<Array<String>>()
+//var libros : Array<Array<String>> = Array<Array<String>>()
     
     @IBOutlet weak var ISBN: UITextField!
     @IBOutlet weak var titulo: UILabel!
@@ -20,12 +20,15 @@ var libros : Array<Array<String>> = Array<Array<String>>()
     
     
     @IBAction func ISBN(sender: AnyObject) {
+        busqueda()
+    }
     
-    //func imprime()->String{
-        let IsbnNumber=String(self.ISBN.text!)
     
-    //func busqueda() {
+    func busqueda() {
         
+        let libro = libros()
+        let IsbnNumber=String(self.ISBN.text!)
+        libro.isnb = IsbnNumber
         let urls="https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:" + IsbnNumber
         let url = NSURL(string: urls)
         let datos: NSData? = NSData(contentsOfURL: url!)
@@ -56,11 +59,8 @@ var libros : Array<Array<String>> = Array<Array<String>>()
                     
                     self.titulo.text = dico2["title"] as! NSString as String
                     let tema = dico2["title"] as! String
-                    
-                    
-                  // self.libros.append([tema,IsbnNumberR])
-             
-                    
+                    libro.titulo = tema
+                    libreria.append(libro)
                     let autores =  dico2["authors"] as! NSArray
                     for autor in autores
                     {
@@ -89,10 +89,8 @@ var libros : Array<Array<String>> = Array<Array<String>>()
                     
                 }
                 
-            }}
-    
-  
-    
+            }
+        }
     }
     
     func Autores(arreglo: [String]) -> String
@@ -111,8 +109,6 @@ var libros : Array<Array<String>> = Array<Array<String>>()
     }
     
 
-
-    
     @IBAction func limpiar(sender: AnyObject) {
         self.autor.text = ""
         self.portada.image = UIImage()
@@ -120,8 +116,6 @@ var libros : Array<Array<String>> = Array<Array<String>>()
         self.ISBN.text = ""
     }
     
-    
-  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -135,7 +129,7 @@ var libros : Array<Array<String>> = Array<Array<String>>()
         // Dispose of any resources that can be recreated.
     }
     
-
+/*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -146,7 +140,7 @@ var libros : Array<Array<String>> = Array<Array<String>>()
 
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
+    }*/
  
 
 }

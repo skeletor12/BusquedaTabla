@@ -8,35 +8,20 @@
 
 import UIKit
 
+var libreria : [libros] = []
+
 class TableViewController: UITableViewController{
     
     
-    var libros : Array<Array<String>> = Array<Array<String>>()
-    var tema = ""
-    var isbn = ""
-    var ISBN : String = ""
-    var titulo : String = "titulo"
     
-    
-    
-    override func viewWillAppear(animated: Bool) {
-        ISBN = String(isbn)
-        print(ISBN)
-        titulo = String(tema)
-        libros.append([titulo,ISBN])
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.reloadData()
         self.title = "LIBROS BUSCADOS"
-        print (libros)
+        //print (libros)
         
-        self.libros.append(["Cien años de soledad","978-84-376-0494-7"])
-        self.libros.append(["Óliver y Patch","978"])
-        self.libros.append(["Federico García Lorca y el teatro clásico","978-84-95301-51-2"])
+        //self.libros.append(["Cien años de soledad","978-84-376-0494-7"])
+        //self.libros.append(["Óliver y Patch","978"])
+        //self.libros.append(["Federico García Lorca y el teatro clásico","978-84-95301-51-2"])
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -44,7 +29,10 @@ class TableViewController: UITableViewController{
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
+    internal override func viewWillAppear(animated: Bool) {
+        tableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -59,7 +47,7 @@ class TableViewController: UITableViewController{
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.libros.count
+        return libreria.count
     }
 
     
@@ -68,7 +56,7 @@ class TableViewController: UITableViewController{
 
         // Configure the cell...
 
-        cell.textLabel?.text = self.libros[indexPath.row][0]
+        cell.textLabel?.text = libreria[indexPath.row].titulo
         
         return cell
     }
@@ -118,7 +106,7 @@ class TableViewController: UITableViewController{
         
         let buscados = segue.destinationViewController as! ViewBuscado
         let ip = self.tableView.indexPathForSelectedRow
-        buscados.ISBN = self.libros[ip!.row][1]
+        buscados.ISBN = libreria[ip!.row].isnb
         }
         
         if segue.identifier == "buscar"{
